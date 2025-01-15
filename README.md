@@ -1,2 +1,2 @@
 # PracticalTest02
- colocviu 2 EIM
+Zamfirescu Denis-Andrei 341C2
