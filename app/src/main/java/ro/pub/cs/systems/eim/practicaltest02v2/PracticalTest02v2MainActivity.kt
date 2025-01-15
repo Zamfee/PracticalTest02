@@ -25,6 +25,7 @@ class PracticalTest02v2MainActivity : AppCompatActivity() {
     private lateinit var etWord: EditText
     private lateinit var btnSearch: Button
     private lateinit var tvDefinition: TextView
+    private lateinit var btnShowTime: Button
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +35,7 @@ class PracticalTest02v2MainActivity : AppCompatActivity() {
         etWord = findViewById(R.id.etWord)
         btnSearch = findViewById(R.id.btnSearch)
         tvDefinition = findViewById(R.id.tvDefinition)
+        btnShowTime = findViewById(R.id.btnShowTime)
 
         btnSearch.setOnClickListener {
             val word = etWord.text.toString().trim()
@@ -44,7 +46,11 @@ class PracticalTest02v2MainActivity : AppCompatActivity() {
             }
         }
 
-        // Înregistrarea receiver-ului
+        btnShowTime.setOnClickListener {
+            val intent = Intent(this, TimeDisplayActivity::class.java)
+            startActivity(intent)
+        }
+
         val filter = IntentFilter("com.example.dictionary.DEFINITION_BROADCAST")
         registerReceiver(definitionReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
     }
@@ -61,7 +67,6 @@ class PracticalTest02v2MainActivity : AppCompatActivity() {
         if (firstDefinition != null) {
             Log.d("ParsedDefinition", "First Definition: $firstDefinition")
 
-            // Emiterea unui broadcast
             val intent = Intent("com.example.dictionary.DEFINITION_BROADCAST").apply {
                 putExtra("definition", firstDefinition)
             }
@@ -83,7 +88,6 @@ class PracticalTest02v2MainActivity : AppCompatActivity() {
                 response: Response<List<DictionaryResponse>>
             ) {
                 if (response.isSuccessful) {
-                    // Logăm răspunsul complet
                     response.body()?.let { dictionaryResponse ->
                         Log.d("ServerResponse", "Raw Response: $dictionaryResponse")
                         parseDefinition(dictionaryResponse)
@@ -114,4 +118,6 @@ class PracticalTest02v2MainActivity : AppCompatActivity() {
         super.onDestroy()
         unregisterReceiver(definitionReceiver)
     }
+
+
 }

@@ -34,5 +34,10 @@
             android:paddingTop="16dp"
             android:text="Definition will appear here"
             android:textSize="16sp"/>
+        <Button
+            android:id="@+id/btnShowTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show Server Time" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
